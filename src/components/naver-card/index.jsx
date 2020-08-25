@@ -1,10 +1,21 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
+import { openNaverView } from "../../actions/navers";
+
 const NaverCard = ({ id, name, job_role, url }) => {
+  const dispatch = useDispatch();
+
+  const handleOpen = event => {
+    event.stopPropagation();
+
+    dispatch(openNaverView({ id, name }));
+  };
+
   return (
-    <div>
-      <img src={url} alt={name} style={{ width: 280, height: 280 }} />
+    <div onClick={handleOpen}>
+      <img src={url} alt={name} style={{ width: 50, height: 50 }} />
       <br />
 
       <div>

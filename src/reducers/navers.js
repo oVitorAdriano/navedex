@@ -17,12 +17,15 @@ const naversReducer = immer((draft = initialDraft, action) => {
     },
 
     [types.VIEW]: ({ id, name }) => {
-      draft.current.id = id;
-      draft.current.name = name;
+      if (draft.current.id !== id) {
+        draft.current.id = id;
+        draft.current.name = name;
+      }
     },
 
     [types.CLOSE]: () => {
-      draft.current = initialDraft.current;
+      draft.current.id = "";
+      draft.current.name = "";
     }
   };
 

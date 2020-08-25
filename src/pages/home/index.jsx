@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { loadNavers } from "../../actions/navers";
+import { loadNavers, closeNaverView } from "../../actions/navers";
 import api from "../../services/api";
 
 import NaversList from "../../components/navers-list";
 import NaverCard from "../../components/naver-card";
+import NaverPreview from "../../components/naver-preview";
 import withApplication from "../../utils/with-application";
 
 const Home = () => {
@@ -23,16 +24,20 @@ const Home = () => {
     };
 
     init();
+
+    return () => dispatch(closeNaverView());
   }, [dispatch]);
 
   return (
-    <div>
+    <>
       <NaversList isFetching={isFetching}>
         {navers.map(({ id, name, job_role, url }) => (
           <NaverCard key={id} {...{ id, name, job_role, url }} />
         ))}
       </NaversList>
-    </div>
+
+      <NaverPreview />
+    </>
   );
 };
 
