@@ -1,18 +1,39 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import { disconnect } from "../../actions/session";
+import { loadNavers } from "../../actions/navers";
+import api from "../../services/api";
+
+import NaversList from "../../components/navers-list";
+import NaverCard from "../../components/naver-card";
+import withApplication from "../../utils/with-application";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const { navers } = useSelector(state => state.navers);
+
+  const [isFetching, setFetching] = useState(true);
+
+  useEffect(() => {
+    const init = async () => {
+      const response = await api.get("/navers");
+
+      dispatch(loadNavers(response.data));
+      setFetching(false);
+    };
+
+    init();
+  }, [dispatch]);
 
   return (
     <div>
-      <h3>Bem-vindo</h3>
-
-      <button onClick={() => dispatch(disconnect())}>Sair</button>
+      <NaversList isFetching={isFetching}>
+        {navers.map(({ id, name, job_role, url }) => (
+          <NaverCard key={id} {...{ id, name, job_role, url }} />
+        ))}
+      </NaversList>
     </div>
   );
 };
 
-export default Home;
+export default withApplication(Home);
