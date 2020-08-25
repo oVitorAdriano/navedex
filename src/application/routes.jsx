@@ -8,6 +8,7 @@ import {
 import { useSelector } from "react-redux";
 
 import Login from "../pages/login";
+import Register from "../pages/register";
 import Home from "../pages/home";
 
 const Routes = () => {
@@ -22,6 +23,10 @@ const Routes = () => {
 
         <Route path="/login">
           {!isAuthenticated ? <Login /> : <Redirect to="/home" />}
+        </Route>
+
+        <Route path="/register">
+          {!isAuthenticated ? <Register /> : <Redirect to="/home" />}
         </Route>
 
         <Route path="/home">

@@ -1,32 +1,20 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import immer from "immer";
 
-import { authenticate } from "../../actions/session";
 import api from "../../services/api";
 
-const Login = () => {
-  const location = useLocation();
-  const dispatch = useDispatch();
+const Register = () => {
+  const history = useHistory();
 
   const [control, setControl] = useState({
     isFetching: false,
     errorMessage: ""
   });
 
-  const [state, setState] = useState(() => {
-    try {
-      return {
-        email: location.state.email,
-        password: ""
-      };
-    } catch (e) {
-      return {
-        email: "testing-user@nave.rs",
-        password: "nave1234"
-      };
-    }
+  const [state, setState] = useState({
+    email: "",
+    password: ""
   });
 
   const handleChange = event => {
@@ -48,28 +36,25 @@ const Login = () => {
     });
 
     try {
-      const response = await api.post("/users/login", state);
+      const response = await api.post("/users/signup", state);
 
-      dispatch(
-        authenticate({
-          token: response.data.token,
-          user: {
-            id: response.data.id,
-            email: response.data.email
-          }
-        })
-      );
+      history.push({
+        pathname: "/login",
+        state: {
+          email: response.data.email
+        }
+      });
     } catch (e) {
       setControl({
         isFetching: false,
-        errorMessage: "E-mail ou senha inválidos."
+        errorMessage: "Algo deu errado..."
       });
     }
   };
 
   return (
     <div>
-      <h3>Conectar</h3>
+      <h3>Cadastro</h3>
 
       <form onSubmit={handleSubmit}>
         <div>
@@ -99,10 +84,10 @@ const Login = () => {
         )}
 
         <div>
-          <Link to="/register">Criar conta</Link>
+          <Link to="/login">Conectar</Link>
 
           <button type="submit" disabled={control.isFetching}>
-            Conectar
+            Finalizar cadastro
           </button>
         </div>
       </form>
@@ -110,4 +95,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
