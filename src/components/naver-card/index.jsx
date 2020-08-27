@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 
 import { openNaverView } from "../../actions/navers";
 
+import NaverActions from "../naver-actions";
+
+import StyledNaverCard from "./style";
+
 const NaverCard = ({ id, name, job_role, url }) => {
   const dispatch = useDispatch();
 
@@ -14,26 +18,25 @@ const NaverCard = ({ id, name, job_role, url }) => {
   };
 
   return (
-    <div onClick={handleOpen}>
-      <img src={url} alt={name} style={{ width: 50, height: 50 }} />
-      <br />
-
+    <StyledNaverCard thumb={url}>
       <div>
-        <strong>
-          {name} ({id})
-        </strong>
-        <br />
+        <div className="thumb" onClick={handleOpen} />
+
+        <strong>{name}</strong>
+
         <span>{job_role}</span>
-      </div>
 
-      <div>
-        <button>Editar</button>
-        <button>Excluir</button>
+        <NaverActions id={id} />
       </div>
-
-      <hr />
-    </div>
+    </StyledNaverCard>
   );
+};
+
+NaverCard.defaultProps = {
+  id: undefined,
+  name: undefined,
+  job_role: undefined,
+  url: undefined
 };
 
 if (process.env.NODE_ENV === "development") {

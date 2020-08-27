@@ -1,8 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { MdClose } from "react-icons/md";
 import PropTypes from "prop-types";
 
 import { closeNaverView } from "../../actions/navers";
+import StyledModal from "./style";
 
 const Modal = ({ children }) => {
   const dispatch = useDispatch();
@@ -16,26 +18,25 @@ const Modal = ({ children }) => {
 
   return (
     current.id && (
-      <div
-        onClick={handleClose}
-        data-close
-        style={{ background: "#000c", padding: 5, fontSize: 11, color: "#fff" }}
-      >
+      <StyledModal onClick={handleClose} data-close>
         <div>
-          <div>
-            <button data-close>X</button>
-          </div>
-        </div>
+          <button data-close>
+            <MdClose />
+          </button>
 
-        <div>{children}</div>
-      </div>
+          {children}
+        </div>
+      </StyledModal>
     )
   );
 };
 
 if (process.env.NODE_ENV === "development") {
   Modal.propTypes = {
-    children: PropTypes.arrayOf(PropTypes.element).isRequired
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.element),
+      PropTypes.element
+    ]).isRequired
   };
 }
 

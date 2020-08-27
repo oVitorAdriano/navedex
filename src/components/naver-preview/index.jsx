@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 import immer from "immer";
 
 import Modal from "../modal";
+import NaverActions from "../naver-actions";
 import api from "../../services/api";
+import StyledNaverPreview from "./style";
 
 const initialState = {
   id: "",
@@ -58,8 +60,6 @@ const NaverPreview = () => {
           errorMessage: ""
         });
 
-        console.log(response.data);
-
         setState(
           immer(draft => {
             draft.id = response.data.id;
@@ -92,55 +92,45 @@ const NaverPreview = () => {
 
   return (
     <Modal>
-      <div>
-        <img
-          src={state.url}
-          alt={state.name}
-          style={{ width: 50, height: 50 }}
-        />
-        <br />
-      </div>
+      <StyledNaverPreview thumb={state.url}>
+        <div className="thumb" />
 
-      <div>
-        <div>
-          <strong>
-            {state.name} ({state.id})
-          </strong>
+        <main>
+          <header>
+            <strong>{state.name}</strong>
 
-          <br />
+            <span>{state.job_role}</span>
+          </header>
 
-          <span>{state.job_role}</span>
-        </div>
+          {!control.isFetching && (
+            <>
+              <section>
+                <strong>Idade</strong>
 
-        {!control.isFetching && (
-          <>
-            <div>
-              <span>Idade</span>
-              <br />
-              <span>
-                {memoizedBirthdate.age} anos - {memoizedBirthdate.date}
-              </span>
-            </div>
+                <span>
+                  {memoizedBirthdate.age} anos - {memoizedBirthdate.date}
+                </span>
+              </section>
 
-            <div>
-              <span>Data de admissão</span>
-              <br />
-              <span>{new Date(state.admission_date).toLocaleDateString()}</span>
-            </div>
+              <section>
+                <strong>Data de admissão</strong>
 
-            <div>
-              <span>Projetos que participou</span>
-              <br />
-              <span>{state.project}</span>
-            </div>
-          </>
-        )}
+                <span>
+                  {new Date(state.admission_date).toLocaleDateString()}
+                </span>
+              </section>
 
-        <div>
-          <button>Editar</button>
-          <button>Excluir</button>
-        </div>
-      </div>
+              <section>
+                <strong>Projetos que participou</strong>
+
+                <span>{state.project}</span>
+              </section>
+
+              <NaverActions id={state.id} />
+            </>
+          )}
+        </main>
+      </StyledNaverPreview>
     </Modal>
   );
 };

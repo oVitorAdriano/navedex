@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import immer from "immer";
 
 import api from "../../services/api";
-
 import { openNaverView } from "../../actions/navers";
+
+import { StyledNaverForm } from "../../assets/css/style";
+import PageHeader from "../../components/page-header";
+import Input from "../../components/input";
+import { Button } from "../../components/button";
+import withApplication from "../../utils/with-application";
 
 const Create = () => {
   const history = useHistory();
@@ -68,93 +73,71 @@ const Create = () => {
   };
 
   return (
-    <div>
-      <div>
-        <Link to="/home">Voltar</Link>
+    <StyledNaverForm>
+      <PageHeader goBack="/home">Adicionar Naver</PageHeader>
 
-        <h3>Adicionar Naver</h3>
-      </div>
+      <form onSubmit={handleSubmit}>
+        {control.errorMessage && (
+          <span className="errorMessage">{control.errorMessage}</span>
+        )}
 
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <strong>Nome</strong>
-            <input
-              autoFocus
-              type="text"
-              name="name"
-              value={state.name}
-              onChange={handleChange}
-            />
-          </div>
+        <div>
+          <Input
+            autoFocus
+            label="Nome"
+            type="text"
+            name="name"
+            value={state.name}
+            onChange={handleChange}
+          />
 
-          <div>
-            <strong>Cargo</strong>
-            <input
-              type="text"
-              name="job_role"
-              value={state.job_role}
-              onChange={handleChange}
-            />
-          </div>
+          <Input
+            label="Cargo"
+            type="text"
+            name="job_role"
+            value={state.job_role}
+            onChange={handleChange}
+          />
 
-          <div>
-            <strong>Data de nascimento</strong>
-            <input
-              type="date"
-              name="birthdate"
-              value={state.birthdate}
-              onChange={handleChange}
-            />
-          </div>
+          <Input
+            label="Data de nascimento"
+            type="date"
+            name="birthdate"
+            value={state.birthdate}
+            onChange={handleChange}
+          />
 
-          <div>
-            <strong>Data de admissão</strong>
-            <input
-              type="date"
-              name="admission_date"
-              value={state.admission_date}
-              onChange={handleChange}
-            />
-          </div>
+          <Input
+            label="Data de admissão"
+            type="date"
+            name="admission_date"
+            value={state.admission_date}
+            onChange={handleChange}
+          />
 
-          <div>
-            <strong>Projetos que participou</strong>
-            <input
-              type="text"
-              name="project"
-              value={state.project}
-              onChange={handleChange}
-            />
-          </div>
+          <Input
+            label="Projetos que participou"
+            type="text"
+            name="project"
+            value={state.project}
+            onChange={handleChange}
+          />
 
-          <div>
-            <strong>URL da foto do Naver</strong>
-            <input
-              type="text"
-              name="url"
-              value={state.url}
-              onChange={handleChange}
-            />
-          </div>
+          <Input
+            label="URL da foto do Naver"
+            type="text"
+            name="url"
+            value={state.url}
+            onChange={handleChange}
+          />
+        </div>
 
-          {control.errorMessage && (
-            <div>
-              <span>{control.errorMessage}</span>
-            </div>
-          )}
-
-          <div>
-            <button type="submit" disabled={control.isFetching}>
-              Salvar
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <pre>{JSON.stringify(state, null, 2)}</pre>
-    </div>
+        <Button submit theme="dark" disabled={control.isFetching}>
+          Salvar
+        </Button>
+      </form>
+    </StyledNaverForm>
   );
 };
 
-export default Create;
+export default withApplication(Create);

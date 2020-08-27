@@ -1,25 +1,26 @@
 import React from "react";
-import { Link } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { MdSync } from "react-icons/md";
 import PropTypes from "prop-types";
 
+import { LinkButton } from "../../components/button";
+
+import StyledNaversList from "./style";
+
 const NaversList = ({ isFetching, children }) => {
-  // const { navers, current } = useSelector(state => state.navers);
-
   return (
-    <div>
-      <div>
-        <h3>Navers</h3>
+    <StyledNaversList>
+      <header>
+        <h2>Navers</h2>
 
-        <Link to="create">Adicionar Naver</Link>
-      </div>
+        {isFetching && <MdSync />}
 
-      <div>{children}</div>
+        <LinkButton theme="dark" to="create">
+          Adicionar Naver
+        </LinkButton>
+      </header>
 
-      {/**
-       * TODO: Current naver modal
-       */}
-    </div>
+      <section>{children}</section>
+    </StyledNaversList>
   );
 };
 
