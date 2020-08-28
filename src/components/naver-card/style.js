@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 
+import thumbPlaceholder from "../../assets/images/thumb-placeholder.png";
+
 export default styled.div`
   & > div {
     display: flex;
@@ -12,7 +14,7 @@ export default styled.div`
         height: 280px;
         flex: 0 0 280px;
         margin-bottom: 16px;
-        background-image: url(${state.thumb});
+        background-image: url(${state.thumb}), url(${thumbPlaceholder});
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;

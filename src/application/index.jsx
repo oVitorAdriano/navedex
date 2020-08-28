@@ -26,13 +26,7 @@ const Application = () => {
     }
   }, [dispatch]);
 
-  return ready ? (
-    <Routes />
-  ) : (
-    <div>
-      <span>Carregando, aguarde...</span>
-    </div>
-  );
+  return ready ? <Routes /> : <span>Carregando...</span>;
 };
 
 export default Application;

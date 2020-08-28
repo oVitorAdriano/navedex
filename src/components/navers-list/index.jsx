@@ -14,7 +14,7 @@ const NaversList = ({ isFetching, children }) => {
 
         {isFetching && <MdSync />}
 
-        <LinkButton theme="dark" to="create">
+        <LinkButton theme="dark" to="/navers/create">
           Adicionar Naver
         </LinkButton>
       </header>

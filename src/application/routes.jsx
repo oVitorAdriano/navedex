@@ -34,7 +34,7 @@ const Routes = () => {
           {isAuthenticated ? <Home /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/create">
+        <Route path="/navers/create">
           {isAuthenticated ? <Create /> : <Redirect to="/login" />}
         </Route>
       </Switch>
