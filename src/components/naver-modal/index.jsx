@@ -5,7 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import api from "../../services/api";
 import { updateNaver } from "../../actions/navers";
 
+import Loader from "../loader";
 import Modal from "../modal";
+import NotFound from "../not-found";
 import NaverActions from "../naver-actions";
 import { getLocaleDate, calculateAge } from "../../utils/dates";
 
@@ -66,41 +68,44 @@ const NaverModal = () => {
   return (
     <Modal isActive handleClose={history.goBack}>
       <StyledNaverModal thumb={state.url}>
-        <div className="thumb" />
+        {control.errorMessage ? (
+          <NotFound goBack="/home">{control.errorMessage}</NotFound>
+        ) : (
+          <>
+            <div className="thumb" />
 
-        <main>
-          <header>
-            <strong>{state.name}</strong>
+            {!control.isFetching ? (
+              <main>
+                <header>
+                  <strong>{state.name}</strong>
 
-            <span>{state.job_role}</span>
-          </header>
+                  <span>{state.job_role}</span>
+                </header>
+                <section>
+                  <strong>Idade</strong>
 
-          {!control.isFetching ? (
-            <>
-              <section>
-                <strong>Idade</strong>
+                  <span>{calculateAge(state.birthdate)} anos</span>
+                </section>
 
-                <span>{calculateAge(state.birthdate)} anos</span>
-              </section>
+                <section>
+                  <strong>Data de admissão</strong>
 
-              <section>
-                <strong>Data de admissão</strong>
+                  <span>{getLocaleDate(state.admission_date)}</span>
+                </section>
 
-                <span>{getLocaleDate(state.admission_date)}</span>
-              </section>
+                <section>
+                  <strong>Projetos que participou</strong>
 
-              <section>
-                <strong>Projetos que participou</strong>
+                  <span>{state.project}</span>
+                </section>
 
-                <span>{state.project}</span>
-              </section>
-
-              <NaverActions id={state.id} data={state} />
-            </>
-          ) : (
-            <span>Carregando...</span>
-          )}
-        </main>
+                <NaverActions id={state.id} data={state} />
+              </main>
+            ) : (
+              <Loader>Carregando...</Loader>
+            )}
+          </>
+        )}
       </StyledNaverModal>
     </Modal>
   );

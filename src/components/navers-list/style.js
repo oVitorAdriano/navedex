@@ -9,12 +9,6 @@ export default styled.div`
   margin-bottom: 32px;
 `;
 
-export const LoadingMessage = styled.p`
-  text-align: center;
-  margin-top: 64px;
-  margin-bottom: 32px;
-`;
-
 export const EmptyList = styled.div`
   display: flex;
   flex-direction: row;

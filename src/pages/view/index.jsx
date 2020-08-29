@@ -5,8 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import api from "../../services/api";
 import { updateNaver } from "../../actions/navers";
 
+import Loader from "../../components/loader";
+import NotFound from "../../components/not-found";
 import PageHeader from "../../components/page-header";
 import NaverActions from "../../components/naver-actions";
+import { calculateAge, getLocaleDate } from "../../utils/dates";
 import withApplication from "../../utils/with-application";
 
 import StyledView from "./style";
@@ -66,42 +69,50 @@ const View = () => {
 
   return (
     <StyledView thumb={state.url}>
-      <PageHeader goBack="/home">{(!!state.id && state.name) || ""}</PageHeader>
+      {!control.isFetching && !control.errorMessage && (
+        <PageHeader goBack="/home">
+          {(!!state.id && state.name) || ""}
+        </PageHeader>
+      )}
 
       {!control.isFetching ? (
-        <main>
-          <div className="thumb" />
-
-          <section>
-            <section>
-              <strong>Cargo</strong>
-
-              <span>{state.job_role}</span>
-            </section>
+        control.errorMessage ? (
+          <NotFound goBack="/home">{control.errorMessage}</NotFound>
+        ) : (
+          <main>
+            <div className="thumb" />
 
             <section>
-              <strong>Idade</strong>
+              <section>
+                <strong>Cargo</strong>
 
-              <span>{state.birthdate}</span>
+                <span>{state.job_role}</span>
+              </section>
+
+              <section>
+                <strong>Idade</strong>
+
+                <span>{calculateAge(state.birthdate)} anos</span>
+              </section>
+
+              <section>
+                <strong>Data de admissão</strong>
+
+                <span>{getLocaleDate(state.admission_date)}</span>
+              </section>
+
+              <section>
+                <strong>Projetos que participou</strong>
+
+                <span>{state.project}</span>
+              </section>
+
+              <NaverActions id={state.id} data={state} />
             </section>
-
-            <section>
-              <strong>Data de admissão</strong>
-
-              <span>{state.admission_date}</span>
-            </section>
-
-            <section>
-              <strong>Projetos que participou</strong>
-
-              <span>{state.project}</span>
-            </section>
-
-            <NaverActions id={state.id} data={state} />
-          </section>
-        </main>
+          </main>
+        )
       ) : (
-        <span>Carregando...</span>
+        <Loader>Carregando naver...</Loader>
       )}
     </StyledView>
   );

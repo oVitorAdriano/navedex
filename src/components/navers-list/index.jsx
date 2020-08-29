@@ -2,14 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { LinkButton } from "../button";
+import Loader from "../loader";
 
-import StyledNaversList, { LoadingMessage, EmptyList } from "./style";
+import StyledNaversList, { EmptyList } from "./style";
 
 const NaversList = ({ isFetching, children }) => {
-  console.log(children);
-
   return isFetching ? (
-    <LoadingMessage>Carregando navers...</LoadingMessage>
+    <Loader>Carregando navers...</Loader>
   ) : !!children.length ? (
     <StyledNaversList>{children}</StyledNaversList>
   ) : (
