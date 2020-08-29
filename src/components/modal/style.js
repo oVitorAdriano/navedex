@@ -9,6 +9,7 @@ export default styled.div`
   padding: 50px 32px;
   background: rgba(0, 0, 0, 0.5);
   overflow: hidden auto;
+  z-index: 9000;
 
   & > div {
     position: relative;

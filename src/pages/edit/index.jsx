@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Redirect, useHistory, useLocation, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import immer from "immer";
 
+import { updateNaver } from "../../actions/navers";
 import api from "../../services/api";
 
 import { StyledNaverForm } from "../../assets/css/style";
@@ -16,6 +17,7 @@ const Edit = () => {
   const history = useHistory();
   const location = useLocation();
   const params = useParams();
+  const dispatch = useDispatch();
 
   const currentNaverState =
     useSelector(state =>
@@ -72,6 +74,8 @@ const Edit = () => {
         errorMessage: "",
         naverId: response.data.id
       });
+
+      dispatch(updateNaver(response.data));
     } catch (e) {
       setControl(
         immer(draft => {

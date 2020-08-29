@@ -130,9 +130,13 @@ const Create = () => {
           <span className="errorMessage">{control.errorMessage}</span>
         )}
 
-        <Button submit theme="dark" disabled={control.isFetching}>
-          Salvar
-        </Button>
+        <Group>
+          <LinkButton to="/home">Cancelar</LinkButton>
+
+          <Button submit theme="dark" disabled={control.isFetching}>
+            Salvar
+          </Button>
+        </Group>
       </form>
 
       <Modal

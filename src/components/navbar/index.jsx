@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import { clearNavers } from "../../actions/navers";
 import { disconnect } from "../../actions/session";
 
 import logo from "../../assets/images/logo.png";
@@ -13,6 +14,7 @@ const Navbar = () => {
 
   const handleLogout = event => {
     dispatch(disconnect());
+    dispatch(clearNavers());
   };
 
   return (
