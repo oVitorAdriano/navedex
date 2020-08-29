@@ -9,6 +9,7 @@ import PageHeader from "../../components/page-header";
 import Input from "../../components/input";
 import { Button, LinkButton, Group } from "../../components/button";
 import Modal from "../../components/modal";
+import { getLocaleDate } from "../../utils/dates";
 import withApplication from "../../utils/with-application";
 
 const Create = () => {
@@ -51,8 +52,8 @@ const Create = () => {
     try {
       const response = await api.post("/navers", {
         ...state,
-        birthdate: new Date(state.birthdate).toLocaleDateString(),
-        admission_date: new Date(state.admission_date).toLocaleDateString()
+        birthdate: getLocaleDate(state.birthdate),
+        admission_date: getLocaleDate(state.admission_date)
       });
 
       setControl({
@@ -155,6 +156,8 @@ const Create = () => {
           </LinkButton>
         </Group>
       </Modal>
+
+      <pre>{JSON.stringify(state, null, 2)}</pre>
     </StyledNaverForm>
   );
 };

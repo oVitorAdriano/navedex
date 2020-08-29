@@ -7,6 +7,7 @@ import { updateNaver } from "../../actions/navers";
 
 import Modal from "../modal";
 import NaverActions from "../naver-actions";
+import { getLocaleDate, calculateAge } from "../../utils/dates";
 
 import StyledNaverModal from "./style";
 
@@ -79,15 +80,13 @@ const NaverModal = () => {
               <section>
                 <strong>Idade</strong>
 
-                <span>{state.birthdate}</span>
+                <span>{calculateAge(state.birthdate)} anos</span>
               </section>
 
               <section>
                 <strong>Data de admissão</strong>
 
-                <span>
-                  {new Date(state.admission_date).toLocaleDateString()}
-                </span>
+                <span>{getLocaleDate(state.admission_date)}</span>
               </section>
 
               <section>
