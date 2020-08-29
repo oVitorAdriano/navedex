@@ -10,6 +10,14 @@ const naversReducer = immer((draft = initialDraft, action) => {
   const actions = {
     [types.LOAD]: payload => {
       draft.navers = payload;
+    },
+
+    [types.UPDATE]: payload => {
+      const i = draft.navers.findIndex(naver => naver.id === payload.id);
+
+      if (i >= 0) {
+        draft.navers[i] = payload;
+      }
     }
   };
 

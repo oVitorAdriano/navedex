@@ -6,6 +6,7 @@ import Login from "../pages/login";
 import Register from "../pages/register";
 import Home from "../pages/home";
 import Create from "../pages/create";
+import View from "../pages/view";
 
 import NaverModal from "../components/naver-modal";
 
@@ -38,12 +39,12 @@ const Routes = () => {
           {isAuthenticated ? <Create /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/navers/:id">
-          {isAuthenticated ? (
-            <div children="TODO: Naver profile page" />
-          ) : (
-            <Redirect to="/login" />
-          )}
+        <Route exact path="/navers/:id">
+          {isAuthenticated ? <View /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/navers/:id/edit">
+          {isAuthenticated ? <span>TODO</span> : <Redirect to="/login" />}
         </Route>
       </Switch>
 

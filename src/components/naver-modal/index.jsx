@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import api from "../../services/api";
+import { updateNaver } from "../../actions/navers";
 
 import Modal from "../modal";
 import NaverActions from "../naver-actions";
@@ -23,6 +24,7 @@ const initialState = {
 const NaverModal = () => {
   const params = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
   const currentNaverState = useSelector(state =>
     state.navers.navers.find(naver => naver.id === params.id)
   );
@@ -45,6 +47,7 @@ const NaverModal = () => {
       try {
         const response = await api.get(`/navers/${params.id}`);
 
+        dispatch(updateNaver(response.data));
         setState(response.data);
         setControl({
           isFetching: false,
@@ -59,7 +62,7 @@ const NaverModal = () => {
     };
 
     init();
-  }, [params.id]);
+  }, [dispatch, params.id]);
 
   return (
     <Modal isActive handleClose={history.goBack}>
