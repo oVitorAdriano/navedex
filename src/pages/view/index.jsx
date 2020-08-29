@@ -97,7 +97,7 @@ const View = () => {
               <span>{state.project}</span>
             </section>
 
-            <NaverActions id={state.id} />
+            <NaverActions id={state.id} data={state} />
           </section>
         </main>
       ) : (

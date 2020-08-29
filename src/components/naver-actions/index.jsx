@@ -5,10 +5,15 @@ import PropTypes from "prop-types";
 
 import StyledNaverActions from "./style";
 
-const NaverActions = ({ id }) => {
+const NaverActions = ({ id, data }) => {
   return (
     <StyledNaverActions>
-      <Link to={`/navers/${id}/edit`}>
+      <Link
+        to={{
+          pathname: `/navers/${id}/edit`,
+          state: data
+        }}
+      >
         <MdEdit />
       </Link>
 
@@ -20,12 +25,14 @@ const NaverActions = ({ id }) => {
 };
 
 NaverActions.defaultProps = {
-  id: undefined
+  id: undefined,
+  data: undefined
 };
 
 if (process.env.NODE_ENV === "development") {
   NaverActions.propTypes = {
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    data: PropTypes.object.isRequired
   };
 }
 

@@ -7,6 +7,7 @@ import Register from "../pages/register";
 import Home from "../pages/home";
 import Create from "../pages/create";
 import View from "../pages/view";
+import Edit from "../pages/edit";
 
 import NaverModal from "../components/naver-modal";
 
@@ -44,7 +45,7 @@ const Routes = () => {
         </Route>
 
         <Route path="/navers/:id/edit">
-          {isAuthenticated ? <span>TODO</span> : <Redirect to="/login" />}
+          {isAuthenticated ? <Edit /> : <Redirect to="/login" />}
         </Route>
       </Switch>
 

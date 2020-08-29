@@ -6,7 +6,15 @@ import NaverActions from "../naver-actions";
 
 import StyledNaverCard from "./style";
 
-const NaverCard = ({ id, name, job_role, url }) => {
+const NaverCard = ({
+  id,
+  name,
+  job_role,
+  birthdate,
+  admission_date,
+  project,
+  url
+}) => {
   const location = useLocation();
 
   return (
@@ -26,7 +34,10 @@ const NaverCard = ({ id, name, job_role, url }) => {
 
         <span>{job_role}</span>
 
-        <NaverActions id={id} />
+        <NaverActions
+          id={id}
+          data={{ id, name, job_role, birthdate, admission_date, project, url }}
+        />
       </div>
     </StyledNaverCard>
   );
@@ -36,6 +47,9 @@ NaverCard.defaultProps = {
   id: undefined,
   name: undefined,
   job_role: undefined,
+  birthdate: undefined,
+  admission_date: undefined,
+  project: undefined,
   url: undefined
 };
 
@@ -44,6 +58,9 @@ if (process.env.NODE_ENV === "development") {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     job_role: PropTypes.string.isRequired,
+    birthdate: PropTypes.string.isRequired,
+    admission_date: PropTypes.string.isRequired,
+    project: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired
   };
 }

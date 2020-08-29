@@ -27,9 +27,14 @@ const Home = () => {
 
   return (
     <NaversList isFetching={isFetching}>
-      {navers.map(({ id, name, job_role, url }) => (
-        <NaverCard key={id} {...{ id, name, job_role, url }} />
-      ))}
+      {navers.map(
+        ({ id, name, job_role, birthdate, admission_date, project, url }) => (
+          <NaverCard
+            key={id}
+            {...{ id, name, job_role, birthdate, admission_date, project, url }}
+          />
+        )
+      )}
     </NaversList>
   );
 };

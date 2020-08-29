@@ -33,9 +33,7 @@ const NaverModal = () => {
     isFetching: true,
     errorMessage: ""
   });
-  const [state, setState] = useState(() => {
-    return currentNaverState || initialState;
-  });
+  const [state, setState] = useState(currentNaverState || initialState);
 
   useEffect(() => {
     const init = async () => {
@@ -98,7 +96,7 @@ const NaverModal = () => {
                 <span>{state.project}</span>
               </section>
 
-              <NaverActions id={state.id} />
+              <NaverActions id={state.id} data={state} />
             </>
           ) : (
             <span>Carregando...</span>

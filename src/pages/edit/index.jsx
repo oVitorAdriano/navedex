@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory, useLocation, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import immer from "immer";
 
 import api from "../../services/api";
@@ -7,25 +8,36 @@ import api from "../../services/api";
 import { StyledNaverForm } from "../../assets/css/style";
 import PageHeader from "../../components/page-header";
 import Input from "../../components/input";
-import { Button, LinkButton, Group } from "../../components/button";
+import { Button, Group, LinkButton } from "../../components/button";
 import Modal from "../../components/modal";
 import withApplication from "../../utils/with-application";
 
-const Create = () => {
+const Edit = () => {
   const history = useHistory();
+  const location = useLocation();
+  const params = useParams();
+
+  const currentNaverState =
+    useSelector(state =>
+      state.navers.navers.find(naver => naver.id === params.id)
+    ) ||
+    (location.state && location.state);
 
   const [control, setControl] = useState({
     isFetching: false,
-    errorMessage: "",
-    naverId: null
+    errorMessage: ""
   });
-  const [state, setState] = useState({
-    name: "",
-    job_role: "",
-    birthdate: "",
-    admission_date: "",
-    url: "",
-    project: ""
+  const [state, setState] = useState(() => {
+    return currentNaverState
+      ? {
+          name: currentNaverState.name,
+          job_role: currentNaverState.job_role,
+          birthdate: currentNaverState.birthdate.substr(0, 10),
+          admission_date: currentNaverState.admission_date.substr(0, 10),
+          project: currentNaverState.project,
+          url: currentNaverState.url
+        }
+      : null;
   });
 
   const handleChange = event => {
@@ -49,7 +61,7 @@ const Create = () => {
     );
 
     try {
-      const response = await api.post("/navers", {
+      const response = await api.put(`/navers/${params.id}`, {
         ...state,
         birthdate: new Date(state.birthdate).toLocaleDateString(),
         admission_date: new Date(state.admission_date).toLocaleDateString()
@@ -70,9 +82,9 @@ const Create = () => {
     }
   };
 
-  return (
+  return currentNaverState ? (
     <StyledNaverForm>
-      <PageHeader goBack="/home">Adicionar Naver</PageHeader>
+      <PageHeader goBack={`/navers/${params.id}`}>Editar Naver</PageHeader>
 
       <form onSubmit={handleSubmit}>
         <div>
@@ -130,18 +142,22 @@ const Create = () => {
           <span className="errorMessage">{control.errorMessage}</span>
         )}
 
-        <Button submit theme="dark" disabled={control.isFetching}>
-          Salvar
-        </Button>
+        <Group>
+          <LinkButton to={`/navers/${params.id}`}>Cancelar</LinkButton>
+
+          <Button submit theme="dark" disabled={control.isFetching}>
+            Salvar
+          </Button>
+        </Group>
       </form>
 
       <Modal
         isActive={!!control.naverId}
         handleClose={() => history.push("/home")}
       >
-        <h1>Naver criado</h1>
+        <h1>Naver atualizado</h1>
 
-        <p>Naver criado com sucesso!</p>
+        <p>Naver atualizado com sucesso!</p>
 
         <Group>
           <LinkButton to="/home">Voltar</LinkButton>
@@ -152,7 +168,9 @@ const Create = () => {
         </Group>
       </Modal>
     </StyledNaverForm>
+  ) : (
+    <Redirect to={`/navers/${params.id}`} />
   );
 };
 
-export default withApplication(Create);
+export default withApplication(Edit);
