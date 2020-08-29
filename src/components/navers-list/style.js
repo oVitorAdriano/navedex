@@ -19,6 +19,7 @@ export default styled.div`
     margin-bottom: 32px;
 
     & > h2 {
+      margin-bottom: 0;
       font-size: 40px;
       line-height: 44px;
     }

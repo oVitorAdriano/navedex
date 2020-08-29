@@ -1,7 +1,7 @@
 import styled, { createGlobalStyle, css } from "styled-components";
 
 const errorMessage = css`
-  margin: -16px 0 32px;
+  margin: -16px 0 16px;
   color: #f44336;
   font-size: 14px;
   font-weight: 600;
@@ -39,6 +39,19 @@ export default createGlobalStyle`
   label:hover,
   select:hover {
     cursor: pointer
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 24px;
+  }
+
+  p {
+    margin-bottom: 16px;
   }
 `;
 

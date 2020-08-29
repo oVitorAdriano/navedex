@@ -6,10 +6,9 @@ export default styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  padding: 100px 32px;
+  padding: 50px 32px;
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(1px);
-  overflow: hidden;
+  overflow: hidden auto;
 
   & > div {
     position: relative;
@@ -38,6 +37,8 @@ export default styled.div`
   }
 
   @media (min-width: 768px) {
+    padding: 100px 32px;
+
     & > div {
       max-width: 960px;
     }

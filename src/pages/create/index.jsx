@@ -1,24 +1,23 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import immer from "immer";
 
 import api from "../../services/api";
-import { openNaverView } from "../../actions/navers";
 
 import { StyledNaverForm } from "../../assets/css/style";
 import PageHeader from "../../components/page-header";
 import Input from "../../components/input";
-import { Button } from "../../components/button";
+import { Button, LinkButton, Group } from "../../components/button";
+import Modal from "../../components/modal";
 import withApplication from "../../utils/with-application";
 
 const Create = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const [control, setControl] = useState({
     isFetching: false,
-    errorMessage: ""
+    errorMessage: "",
+    naverId: null
   });
   const [state, setState] = useState({
     name: "",
@@ -44,10 +43,12 @@ const Create = () => {
   const handleSubmit = async event => {
     event.preventDefault();
 
-    setControl({
-      isFetching: true,
-      errorMessage: ""
-    });
+    setControl(
+      immer(draft => {
+        draft.isFetching = true;
+        draft.errorMessage = "";
+      })
+    );
 
     try {
       const response = await api.post("/navers", {
@@ -56,19 +57,18 @@ const Create = () => {
         admission_date: localeDateString(state.admission_date)
       });
 
-      dispatch(
-        openNaverView({
-          id: response.data.id,
-          name: response.data.name
-        })
-      );
-
-      history.push("/home");
-    } catch (e) {
       setControl({
         isFetching: false,
-        errorMessage: "Algo deu errado..."
+        errorMessage: "",
+        naverId: response.data.id
       });
+    } catch (e) {
+      setControl(
+        immer(draft => {
+          draft.isFetching = false;
+          draft.errorMessage = "Algo deu errado...";
+        })
+      );
     }
   };
 
@@ -77,10 +77,6 @@ const Create = () => {
       <PageHeader goBack="/home">Adicionar Naver</PageHeader>
 
       <form onSubmit={handleSubmit}>
-        {control.errorMessage && (
-          <span className="errorMessage">{control.errorMessage}</span>
-        )}
-
         <div>
           <Input
             autoFocus
@@ -132,10 +128,31 @@ const Create = () => {
           />
         </div>
 
+        {control.errorMessage && (
+          <span className="errorMessage">{control.errorMessage}</span>
+        )}
+
         <Button submit theme="dark" disabled={control.isFetching}>
           Salvar
         </Button>
       </form>
+
+      <Modal
+        isActive={!!control.naverId}
+        handleClose={() => history.push("/home")}
+      >
+        <h1>Naver criado</h1>
+
+        <p>Naver criado com sucesso!</p>
+
+        <Group>
+          <LinkButton to="/home">Voltar</LinkButton>
+
+          <LinkButton theme="dark" to={`/navers/${control.naverId}`}>
+            Ver perfil
+          </LinkButton>
+        </Group>
+      </Modal>
     </StyledNaverForm>
   );
 };

@@ -19,6 +19,7 @@ export default styled.div`
   }
 
   & > h3 {
+    margin-bottom: 0;
     font-size: 24px;
     line-height: 36px;
   }

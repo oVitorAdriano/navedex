@@ -5,13 +5,13 @@ import thumbPlaceholder from "../../assets/images/thumb-placeholder.png";
 export default styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 320px;
+  min-height: 480px;
   margin: -32px;
   overflow: hidden;
 
   ${state => css`
     & > .thumb {
-      flex: 0 0 280px;
+      flex: 0 0 320px;
       background-image: url(${state.thumb}), url(${thumbPlaceholder});
       background-size: cover;
       background-position: center;

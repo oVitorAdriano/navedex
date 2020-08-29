@@ -1,26 +1,26 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-
-import { openNaverView } from "../../actions/navers";
 
 import NaverActions from "../naver-actions";
 
 import StyledNaverCard from "./style";
 
 const NaverCard = ({ id, name, job_role, url }) => {
-  const dispatch = useDispatch();
-
-  const handleOpen = event => {
-    event.stopPropagation();
-
-    dispatch(openNaverView({ id, name }));
-  };
+  const location = useLocation();
 
   return (
     <StyledNaverCard thumb={url}>
       <div>
-        <div className="thumb" onClick={handleOpen} />
+        <Link
+          to={{
+            pathname: `/navers/${id}`,
+            state: {
+              background: location
+            }
+          }}
+          className="thumb"
+        />
 
         <strong>{name}</strong>
 

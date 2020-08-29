@@ -10,6 +10,7 @@ export default styled.div`
 
     ${state => css`
       & > .thumb {
+        display: block;
         width: 280px;
         height: 280px;
         flex: 0 0 280px;

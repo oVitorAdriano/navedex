@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import Routes from "./routes";
@@ -26,7 +27,13 @@ const Application = () => {
     }
   }, [dispatch]);
 
-  return ready ? <Routes /> : <span>Carregando...</span>;
+  return ready ? (
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
+  ) : (
+    <span>Carregando...</span>
+  );
 };
 
 export default Application;
