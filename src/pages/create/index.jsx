@@ -134,8 +134,12 @@ const Create = () => {
         <Group>
           <LinkButton to="/home">Cancelar</LinkButton>
 
-          <Button submit theme="dark" disabled={control.isFetching}>
-            Salvar
+          <Button
+            submit
+            theme="dark"
+            disabled={control.isFetching || !!control.naverId}
+          >
+            {control.isFetching ? "Aguarde..." : "Salvar"}
           </Button>
         </Group>
       </form>
@@ -156,8 +160,6 @@ const Create = () => {
           </LinkButton>
         </Group>
       </Modal>
-
-      <pre>{JSON.stringify(state, null, 2)}</pre>
     </StyledNaverForm>
   );
 };

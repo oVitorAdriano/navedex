@@ -24,29 +24,14 @@ const Routes = () => {
           {isAuthenticated ? <Redirect to="/home" /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/login">
-          {!isAuthenticated ? <Login /> : <Redirect to="/home" />}
-        </Route>
+        <Route path="/login" children={<Login />} />
+        <Route path="/register" children={<Register />} />
 
-        <Route path="/register">
-          {!isAuthenticated ? <Register /> : <Redirect to="/home" />}
-        </Route>
+        <Route path="/home" children={<Home />} />
 
-        <Route path="/home">
-          {isAuthenticated ? <Home /> : <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/navers/create">
-          {isAuthenticated ? <Create /> : <Redirect to="/login" />}
-        </Route>
-
-        <Route exact path="/navers/:id">
-          {isAuthenticated ? <View /> : <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/navers/:id/edit">
-          {isAuthenticated ? <Edit /> : <Redirect to="/login" />}
-        </Route>
+        <Route path="/navers/create" children={<Create />} />
+        <Route exact path="/navers/:id" children={<View />} />
+        <Route path="/navers/:id/edit" children={<Edit />} />
       </Switch>
 
       {background &&

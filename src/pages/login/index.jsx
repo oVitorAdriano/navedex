@@ -7,9 +7,9 @@ import { authenticate } from "../../actions/session";
 import api from "../../services/api";
 
 import logo from "../../assets/images/logo.png";
-import { StyledAuthentication } from "../../assets/css/style";
 import Input from "../../components/input";
 import { Button } from "../../components/button";
+import withAuthentication from "../../utils/with-authentication";
 
 const Login = () => {
   const location = useLocation();
@@ -21,17 +21,12 @@ const Login = () => {
   });
 
   const [state, setState] = useState(() => {
-    try {
-      return {
-        email: location.state.email,
-        password: ""
-      };
-    } catch (e) {
-      return {
-        email: "testing-user@nave.rs",
-        password: "nave1234"
-      };
-    }
+    const fromRegister = location.state && location.state.email;
+
+    return {
+      email: fromRegister || "testing-user@nave.rs",
+      password: fromRegister ? "" : "nave1234"
+    };
   });
 
   const handleChange = event => {
@@ -73,39 +68,37 @@ const Login = () => {
   };
 
   return (
-    <StyledAuthentication>
-      <div>
-        <img src={logo} alt="nave.rs logo" />
+    <div>
+      <img src={logo} alt="nave.rs logo" />
 
-        <form onSubmit={handleSubmit}>
-          <Input
-            autoFocus
-            label="E-mail"
-            type="email"
-            name="email"
-            value={state.email}
-            onChange={handleChange}
-          />
+      <form onSubmit={handleSubmit}>
+        <Input
+          autoFocus
+          label="E-mail"
+          type="email"
+          name="email"
+          value={state.email}
+          onChange={handleChange}
+        />
 
-          <Input
-            label="Senha"
-            type="password"
-            name="password"
-            value={state.password}
-            onChange={handleChange}
-          />
+        <Input
+          label="Senha"
+          type="password"
+          name="password"
+          value={state.password}
+          onChange={handleChange}
+        />
 
-          {control.errorMessage && (
-            <span className="errorMessage">{control.errorMessage}</span>
-          )}
+        {control.errorMessage && (
+          <span className="errorMessage">{control.errorMessage}</span>
+        )}
 
-          <Button submit theme="dark" disabled={control.isFetching}>
-            Entrar
-          </Button>
-        </form>
-      </div>
-    </StyledAuthentication>
+        <Button submit theme="dark" disabled={control.isFetching}>
+          {control.isFetching ? "Aguarde..." : "Entrar"}
+        </Button>
+      </form>
+    </div>
   );
 };
 
-export default Login;
+export default withAuthentication(Login);

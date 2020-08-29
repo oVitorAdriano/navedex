@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { MdEdit, MdDelete } from "react-icons/md";
+import immer from "immer";
 import PropTypes from "prop-types";
 
 import { deleteNaver } from "../../actions/navers";
@@ -15,6 +16,7 @@ import StyledNaverActions from "./style";
 const NaverActions = ({ id, data }) => {
   const dispatch = useDispatch();
   const [control, setControl] = useState({
+    isFetching: false,
     canDelete: false,
     deleted: false
   });
@@ -22,14 +24,30 @@ const NaverActions = ({ id, data }) => {
   const handleDelete = async event => {
     event.preventDefault();
 
+    setControl(
+      immer(draft => {
+        draft.isFetching = true;
+      })
+    );
+
     const response = await api.delete(`/navers/${id}`);
 
-    setControl({ ...control, deleted: response.data.deleted });
+    setControl(
+      immer(draft => {
+        draft.isFetching = false;
+        draft.deleted = response.data.deleted;
+      })
+    );
   };
 
   const handleClose = event => {
     control.deleted && dispatch(deleteNaver({ id }));
-    setControl({ ...control, canDelete: false });
+
+    setControl(
+      immer(draft => {
+        draft.canDelete = false;
+      })
+    );
   };
 
   return (
@@ -69,7 +87,7 @@ const NaverActions = ({ id, data }) => {
                 <Button onClick={handleClose}>Cancelar</Button>
 
                 <Button submit theme="dark">
-                  Excluir
+                  {control.isFetching ? "Aguarde..." : "Excluir"}
                 </Button>
               </Group>
             </form>

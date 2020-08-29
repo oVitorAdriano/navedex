@@ -2,21 +2,18 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import Navbar from "../components/navbar";
-import { ApplicationTemplate } from "../components/templates";
+import { AuthenticationTemplate } from "../components/templates";
 
 const withApplication = WrappedComponent => {
   return () => {
     const { isAuthenticated } = useSelector(state => state.session);
 
-    return isAuthenticated ? (
-      <ApplicationTemplate>
-        <Navbar />
-
+    return !isAuthenticated ? (
+      <AuthenticationTemplate>
         <WrappedComponent />
-      </ApplicationTemplate>
+      </AuthenticationTemplate>
     ) : (
-      <Redirect to="/login" />
+      <Redirect to="/home" />
     );
   };
 };

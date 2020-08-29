@@ -28,7 +28,8 @@ const Edit = () => {
 
   const [control, setControl] = useState({
     isFetching: false,
-    errorMessage: ""
+    errorMessage: "",
+    naverId: null
   });
   const [state, setState] = useState(() => {
     return currentNaverState
@@ -150,8 +151,12 @@ const Edit = () => {
         <Group>
           <LinkButton to={`/navers/${params.id}`}>Cancelar</LinkButton>
 
-          <Button submit theme="dark" disabled={control.isFetching}>
-            Salvar
+          <Button
+            submit
+            theme="dark"
+            disabled={control.isFetching || !!control.naverId}
+          >
+            {control.isFetching ? "Aguarde..." : "Salvar"}
           </Button>
         </Group>
       </form>
@@ -172,8 +177,6 @@ const Edit = () => {
           </LinkButton>
         </Group>
       </Modal>
-
-      <pre>{JSON.stringify(state, null, 2)}</pre>
     </StyledNaverForm>
   ) : (
     <Redirect to={`/navers/${params.id}`} />
