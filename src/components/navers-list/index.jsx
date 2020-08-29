@@ -1,26 +1,23 @@
 import React from "react";
-import { MdSync } from "react-icons/md";
 import PropTypes from "prop-types";
 
-import { LinkButton } from "../../components/button";
+import { LinkButton } from "../button";
 
-import StyledNaversList from "./style";
+import StyledNaversList, { LoadingMessage, EmptyList } from "./style";
 
 const NaversList = ({ isFetching, children }) => {
-  return (
-    <StyledNaversList>
-      <header>
-        <h2>Navers</h2>
+  console.log(children);
 
-        {isFetching && <MdSync />}
+  return isFetching ? (
+    <LoadingMessage>Carregando navers...</LoadingMessage>
+  ) : !!children.length ? (
+    <StyledNaversList>{children}</StyledNaversList>
+  ) : (
+    <EmptyList>
+      <span>Não há navers cadastrados.</span>
 
-        <LinkButton theme="dark" to="/navers/create">
-          Adicionar Naver
-        </LinkButton>
-      </header>
-
-      <section>{children}</section>
-    </StyledNaversList>
+      <LinkButton to="/navers/create">Adicionar Naver</LinkButton>
+    </EmptyList>
   );
 };
 

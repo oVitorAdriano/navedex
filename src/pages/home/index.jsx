@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { MdSync } from "react-icons/md";
 
 import { loadNavers } from "../../actions/navers";
 import api from "../../services/api";
 
+import { LinkButton } from "../../components/button";
 import NaversList from "../../components/navers-list";
 import NaverCard from "../../components/naver-card";
 import withApplication from "../../utils/with-application";
+
+import StyledHome from "./style";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -26,16 +30,23 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <NaversList isFetching={isFetching}>
-      {navers.map(
-        ({ id, name, job_role, birthdate, admission_date, project, url }) => (
-          <NaverCard
-            key={id}
-            {...{ id, name, job_role, birthdate, admission_date, project, url }}
-          />
-        )
-      )}
-    </NaversList>
+    <StyledHome>
+      <header>
+        <h2>Navers</h2>
+
+        {isFetching && <MdSync />}
+
+        <LinkButton theme="dark" to="/navers/create">
+          Adicionar Naver
+        </LinkButton>
+      </header>
+
+      <NaversList isFetching={isFetching}>
+        {navers.map(naver => (
+          <NaverCard key={naver.id} {...naver} />
+        ))}
+      </NaversList>
+    </StyledHome>
   );
 };
 
