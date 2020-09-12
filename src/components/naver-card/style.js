@@ -32,4 +32,14 @@ export default styled.div`
       margin-bottom: 10px;
     }
   }
+
+  @media (min-width: 768px) {
+    & > div {
+      & > .thumb {
+        width: 320px;
+        height: 320px;
+        flex: 0 0 320px;
+      }
+    }
+  }
 `;

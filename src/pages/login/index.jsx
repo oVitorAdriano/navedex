@@ -24,8 +24,8 @@ const Login = () => {
     const fromRegister = location.state && location.state.email;
 
     return {
-      email: fromRegister || "testing-user@nave.rs",
-      password: fromRegister ? "" : "nave1234"
+      email: fromRegister || "",
+      password: ""
     };
   });
 
@@ -41,6 +41,15 @@ const Login = () => {
 
   const handleSubmit = async event => {
     event.preventDefault();
+
+    if (!state.email.trim().length || !state.password.trim().length) {
+      setControl({
+        isFetching: false,
+        errorMessage: "Preencha todos os campos."
+      });
+
+      return;
+    }
 
     setControl({
       isFetching: true,

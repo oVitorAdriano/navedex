@@ -2,11 +2,15 @@ import styled from "styled-components";
 
 export default styled.div`
   display: grid;
-  grid-column-gap: 16px;
-  grid-row-gap: 32px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, max-content));
+  grid-gap: 32px;
+  grid-template-columns: repeat(auto-fit, 280px);
   justify-content: center;
   margin-bottom: 32px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(auto-fit, 320px);
+    justify-content: space-between;
+  }
 `;
 
 export const EmptyList = styled.div`

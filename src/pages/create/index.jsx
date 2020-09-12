@@ -42,6 +42,23 @@ const Create = () => {
   const handleSubmit = async event => {
     event.preventDefault();
 
+    if (
+      !state.name.trim().length ||
+      !state.job_role.trim().length ||
+      !state.birthdate.trim().length ||
+      !state.admission_date.trim().length ||
+      !state.url.trim().length ||
+      !state.project.trim().length
+    ) {
+      setControl(
+        immer(draft => {
+          draft.errorMessage = "Preencha todos os campos.";
+        })
+      );
+
+      return;
+    }
+
     setControl(
       immer(draft => {
         draft.isFetching = true;
