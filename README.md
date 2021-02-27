@@ -17,7 +17,7 @@ v12.18.3
 Inicie clonando este repositório em sua máquina local:
 
 ```sh
-$ git clone https://github.com/vitor-adriano/navedex
+$ git clone https://github.com/oVitorAdriano/navedex
 $ cd navedex
 ```
 
@@ -46,7 +46,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## Autores
 
-- **Vitor Adriano Savedra** - **[vitor-adriano]**
+- **Vitor Adriano Savedra** - **[oVitorAdriano]**
 
 ## Licença
 
@@ -55,4 +55,4 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 [node]: https://nodejs.org/en/
 [yarn]: https://yarnpkg.com/
-[vitor-adriano]: https://github.com/vitor-adriano/
+[oVitorAdriano]: https://github.com/oVitorAdriano/
